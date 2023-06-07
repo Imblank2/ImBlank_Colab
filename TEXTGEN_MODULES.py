@@ -61,7 +61,7 @@ def main_func(var):
             
         elif action.startswith('!'):
             # Run shell commands           
-            with subprocess.Popen(cmd[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as proc:
+        	with subprocess.Popen(cmd[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as proc:
               while True:
                 out = proc.stdout.readline() or proc.stderr.readline()
                 if not out:
