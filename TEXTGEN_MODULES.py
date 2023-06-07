@@ -50,7 +50,7 @@ def main_func(var):
             print(os.getcwd())
         elif action.startswith('!'):
             # Run shell commands           
-            with subprocess.Popen(cmd[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as proc:
+            with subprocess.Popen(cmd[1:], stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, shell=True) as proc:
               while True:
                 out = proc.stdout.readline() or proc.stderr.readline()
                 if not out:
@@ -268,6 +268,7 @@ def main_func(var):
         jpy("!python setup_cuda.py install")
     
     def download_model(type): #$
+      print("\033[92m")
       tmp_repo=f"/content/.{huggingface_repo}"
       jpy(f"!git lfs install --skip-smudge && export GIT_LFS_SKIP_SMUDGE=1 && git clone https://huggingface.co/{huggingface_org}/{huggingface_repo} /content/.{huggingface_repo} --branch {huggingface_branch}")
       jpy(f"!rm -rf {tmp_repo}/PygmalionCoT-7b-ggml-model-f16.bin {tmp_repo}/PygmalionCoT-7b-ggml-q4_2.bin {tmp_repo}/PygmalionCoT-7b-ggml-q5_1.bin {tmp_repo}/PygmalionCoT-7b-ggml-q8_0.bin {tmp_repo}/PygmalionCoT-7b-4bit-128g.safetensors {tmp_repo}/pytorch_model.bin.index.json {tmp_repo}/training_args.bin {tmp_repo}/trainer_state.json {tmp_repo}/all_results.json {tmp_repo}/eval_results.json {tmp_repo}/.gitattributes {tmp_repo}/train_results.json")
@@ -340,7 +341,6 @@ def main_func(var):
     language_codes = {'Afrikaans': 'af', 'Albanian': 'sq', 'Amharic': 'am', 'Arabic': 'ar', 'Armenian': 'hy', 'Azerbaijani': 'az', 'Basque': 'eu', 'Belarusian': 'be', 'Bengali': 'bn', 'Bosnian': 'bs', 'Bulgarian': 'bg', 'Catalan': 'ca', 'Cebuano': 'ceb', 'Chinese (Simplified)': 'zh-CN', 'Chinese (Traditional)': 'zh-TW', 'Corsican': 'co', 'Croatian': 'hr', 'Czech': 'cs', 'Danish': 'da', 'Dutch': 'nl', 'English': 'en', 'Esperanto': 'eo', 'Estonian': 'et', 'Finnish': 'fi', 'French': 'fr', 'Frisian': 'fy', 'Galician': 'gl', 'Georgian': 'ka', 'German': 'de', 'Greek': 'el', 'Gujarati': 'gu', 'Haitian Creole': 'ht', 'Hausa': 'ha', 'Hawaiian': 'haw', 'Hebrew': 'iw', 'Hindi': 'hi', 'Hmong': 'hmn', 'Hungarian': 'hu', 'Icelandic': 'is', 'Igbo': 'ig', 'Indonesian': 'id', 'Irish': 'ga', 'Italian': 'it', 'Japanese': 'ja', 'Javanese': 'jw', 'Kannada': 'kn', 'Kazakh': 'kk', 'Khmer': 'km', 'Korean': 'ko', 'Kurdish': 'ku', 'Kyrgyz': 'ky', 'Lao': 'lo', 'Latin': 'la', 'Latvian': 'lv', 'Lithuanian': 'lt', 'Luxembourgish': 'lb', 'Macedonian': 'mk', 'Malagasy': 'mg', 'Malay': 'ms', 'Malayalam': 'ml', 'Maltese': 'mt', 'Maori': 'mi', 'Marathi': 'mr', 'Mongolian': 'mn', 'Myanmar (Burmese)': 'my', 'Nepali': 'ne', 'Norwegian': 'no', 'Nyanja (Chichewa)': 'ny', 'Pashto': 'ps', 'Persian': 'fa', 'Polish': 'pl', 'Portuguese (Portugal, Brazil)': 'pt', 'Punjabi': 'pa', 'Romanian': 'ro', 'Russian': 'ru', 'Samoan': 'sm', 'Scots Gaelic': 'gd', 'Serbian': 'sr', 'Sesotho': 'st', 'Shona': 'sn', 'Sindhi': 'sd', 'Sinhala (Sinhalese)': 'si', 'Slovak': 'sk', 'Slovenian': 'sl', 'Somali': 'so', 'Spanish': 'es', 'Sundanese': 'su', 'Swahili': 'sw', 'Swedish': 'sv', 'Tagalog (Filipino)': 'tl', 'Tajik': 'tg', 'Tamil': 'ta', 'Telugu': 'te', 'Thai': 'th', 'Turkish': 'tr', 'Ukrainian': 'uk', 'Urdu': 'ur', 'Uzbek': 'uz', 'Vietnamese': 'vi', 'Welsh': 'cy', 'Xhosa': 'xh', 'Yiddish': 'yi', 'Yoruba': 'yo', 'Zulu': 'zu'}
     username_found = find_name()
     overwrite_profile()
-    print("\033[92m")
     
     if "Pygmalion-350m(CPU)" in model:
       huggingface_org="alpindale";huggingface_repo="pygm-350m-experimental";huggingface_branch="main"
